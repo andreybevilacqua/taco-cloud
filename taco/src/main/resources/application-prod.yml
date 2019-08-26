@@ -1,0 +1,29 @@
+spring:
+  h2:
+    console:
+      path: /console
+  datasource:
+    url: jdbc:h2:mem:taco-app
+  artemis: #ActiveMQ Artemis
+    host: artemis.taco.com
+    port: 61617
+    user: tacoweb
+    password: 13tm31n
+  jms:
+    template:
+      default-destination: taco.order.queue
+
+server:
+  port: 8444
+  ssl:
+    key-store: /Users/andreybevilacqua/Documents/java/workspace/taco-cloud/taco/mykeys.jks
+    key-store-password: another_complex_pwd
+    key-password: another_complex_pwd
+
+logging:
+  path: /Users/andreybevilacqua/Downloads
+  file: taco_prod.log
+
+taco:
+  orders:
+    pageSize: 20

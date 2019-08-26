@@ -1,0 +1,40 @@
+spring:
+  h2:
+    console:
+      path: /console
+  datasource:
+    url: jdbc:h2:mem:taco-app
+  artemis: #ActiveMQ Artemis
+    host: tcp://localhost:61616
+    user: admin
+    password: admin
+    mode: native
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    queue-name: tacocloud.orders
+    template:
+      exchange: tacocloud.orders
+      routing-key: kitchens.central
+  jms:
+    template:
+      default-destination: taco.order.queue
+
+server:
+  port: 8443
+  ssl:
+    key-store: /Users/andreybevilacqua/Documents/java/workspace/taco-cloud/taco/mykeys.jks
+    key-store-password: 123456
+    key-password: 123456
+
+logging:
+  path: /Users/andreybevilacqua/Downloads
+  file: taco.log
+
+taco:
+  orders:
+    pageSize: 10
+  integration:
+    folder: /Users/andreybevilacqua/Downloads
