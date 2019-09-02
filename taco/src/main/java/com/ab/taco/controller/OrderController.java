@@ -11,7 +11,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -40,10 +39,10 @@ public class OrderController {
         this.orderProps = orderProps;
     }
 
-    @GetMapping("/current")
-    public String orderForm(Model model) {
-        model.addAttribute("order", new Order());
-        return "orderForm";
+    @GetMapping
+    public List<Order> ordersFromUser() {
+        User user = userRepository.findByUsername("user");
+        return orderRepository.findByUserOrderByPlacedAtDesc(user, PageRequest.of(0, orderProps.getPageSize()));
     }
 
     @PostMapping
@@ -62,12 +61,6 @@ public class OrderController {
         // Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // User user = (User) authentication.getPrincipal();
         return true;
-    }
-
-    @GetMapping
-    public List<Order> ordersFromUser(Principal principal) {
-        User user = userRepository.findByUsername("user");
-        return orderRepository.findByUserOrderByPlacedAtDesc(user, PageRequest.of(0, orderProps.getPageSize()));
     }
 
     @PatchMapping(path = "/{orderId}", consumes = "application/json")
