@@ -25,17 +25,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Slf4j
 @RestController
 @RequestMapping(value = "/design", produces = {"application/json", "text/xml"})
-@SessionAttributes("order")
 @CrossOrigin(origins = "*")
 public class DesignTacoController {
 
     private final TacoRepository tacoRepository;
-
-    @ModelAttribute
-    public Taco design() { return new Taco(); }
-
-    @ModelAttribute
-    public Order order() { return new Order(); }
 
     @Autowired
     public DesignTacoController(TacoRepository tacoRepository) {
