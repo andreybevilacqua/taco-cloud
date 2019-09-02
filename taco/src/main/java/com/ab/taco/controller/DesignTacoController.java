@@ -6,7 +6,6 @@ import com.ab.taco.model.Ingredient;
 import com.ab.taco.model.Ingredient.Type;
 import com.ab.taco.model.Order;
 import com.ab.taco.model.Taco;
-import com.ab.taco.repo.IngredientRepository;
 import com.ab.taco.repo.TacoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,8 +31,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @CrossOrigin(origins = "*")
 public class DesignTacoController {
 
-    private IngredientRepository ingredientRepo;
-
     private TacoRepository tacoRepository;
 
     @ModelAttribute
@@ -43,22 +39,8 @@ public class DesignTacoController {
     @ModelAttribute
     public Order order() { return new Order(); }
 
-    public DesignTacoController(TacoRepository tacoRepository, IngredientRepository ingredientRepository) {
+    public DesignTacoController(TacoRepository tacoRepository) {
         this.tacoRepository = tacoRepository;
-        this.ingredientRepo = ingredientRepository;
-    }
-
-    @GetMapping
-    public String showDesignForm(Model model) {
-        List<Ingredient> ingredients = new ArrayList<>();
-        ingredientRepo.findAll().forEach(ingredients::add);
-
-        Type[] types = Type.values();
-        for (Type type : types) {
-            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
-        }
-
-        return "design";
     }
 
     @GetMapping("/recent")
