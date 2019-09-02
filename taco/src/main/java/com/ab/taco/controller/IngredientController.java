@@ -2,7 +2,6 @@ package com.ab.taco.controller;
 
 import com.ab.taco.model.Ingredient;
 import com.ab.taco.repo.IngredientRepository;
-import com.ab.taco.service.IngredientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +17,6 @@ public class IngredientController {
 
     @Autowired
     private IngredientRepository repository;
-
-    @Autowired
-    private IngredientService service;
 
     @GetMapping
     public List<Ingredient> getAllIngredients() {

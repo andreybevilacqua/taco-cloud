@@ -5,8 +5,6 @@ import com.ab.taco.model.User;
 import com.ab.taco.property.OrderProps;
 import com.ab.taco.repo.OrderRepository;
 import com.ab.taco.repo.UserRepository;
-import com.ab.taco.service.message.JmsOrderMessagingService;
-import com.ab.taco.service.message.RabbitOrderMessagingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,8 +21,6 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
-import static com.ab.taco.service.util.ObjectCreator.buildOrder;
-
 @Slf4j
 @RestController
 @RequestMapping("/orders")
@@ -40,24 +36,10 @@ public class OrderController {
     @Autowired
     private OrderProps orderProps;
 
-    @Autowired
-    private JmsOrderMessagingService jmsOrderMessagingService;
-
-    @Autowired
-    private RabbitOrderMessagingService rabbitOrderMessagingService;
-
     @GetMapping("/current")
     public String orderForm(Model model) {
         model.addAttribute("order", new Order());
         return "orderForm";
-    }
-
-    @GetMapping("/convertAndSend/order")
-    public String convertAndSendOrder() {
-        Order order = buildOrder();
-//        jmsOrderMessagingService.sendOrder(order);
-        rabbitOrderMessagingService.sendOrder(order);
-        return "Convert and sent order";
     }
 
     @PostMapping
