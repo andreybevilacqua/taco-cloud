@@ -6,7 +6,7 @@ import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 class IngredientResourceAssembler extends ResourceAssemblerSupport<Ingredient, IngredientResource> {
 
-    public IngredientResourceAssembler() {
+    IngredientResourceAssembler() {
         super(IngredientController.class, IngredientResource.class);
     }
 

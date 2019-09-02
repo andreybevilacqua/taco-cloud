@@ -2,12 +2,11 @@ package com.ab.taco.controller;
 
 import com.ab.taco.controller.api.TacoResource;
 import com.ab.taco.controller.api.TacoResourceAssembler;
-import com.ab.taco.model.Ingredient;
-import com.ab.taco.model.Ingredient.Type;
 import com.ab.taco.model.Order;
 import com.ab.taco.model.Taco;
 import com.ab.taco.repo.TacoRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -31,7 +29,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @CrossOrigin(origins = "*")
 public class DesignTacoController {
 
-    private TacoRepository tacoRepository;
+    private final TacoRepository tacoRepository;
 
     @ModelAttribute
     public Taco design() { return new Taco(); }
@@ -39,6 +37,7 @@ public class DesignTacoController {
     @ModelAttribute
     public Order order() { return new Order(); }
 
+    @Autowired
     public DesignTacoController(TacoRepository tacoRepository) {
         this.tacoRepository = tacoRepository;
     }
@@ -74,13 +73,4 @@ public class DesignTacoController {
         tacoRepository.save(taco);
         return new ResponseEntity(HttpStatus.CREATED);
     }
-
-    private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
-        return ingredients
-                .stream()
-                .filter(ingredient -> ingredient.getType().equals(type))
-                .collect(Collectors.toList());
-    }
-
-
 }

@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class RegistrationController {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    private final UserAuthoritiesRepository authoritiesRepository;
+
+    private final PasswordEncoder encoder;
 
     @Autowired
-    private UserAuthoritiesRepository authoritiesRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
+    public RegistrationController(PasswordEncoder encoder, UserAuthoritiesRepository authoritiesRepository, UserRepository repository) {
+        this.encoder = encoder;
+        this.authoritiesRepository = authoritiesRepository;
+        this.repository = repository;
+    }
 
     @GetMapping
     public String registerForm() {

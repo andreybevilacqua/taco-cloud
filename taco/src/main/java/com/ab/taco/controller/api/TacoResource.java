@@ -20,7 +20,7 @@ public class TacoResource extends ResourceSupport {
     @Getter
     private final List<IngredientResource> ingredients;
 
-    public TacoResource(Taco taco) {
+    TacoResource(Taco taco) {
         this.name = taco.getName();
         this.createdAt = taco.getCreatedAt();
         this.ingredients = ingredientAssembler.toResources(taco.getIngredients());

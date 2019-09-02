@@ -27,14 +27,18 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class OrderController {
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
+
+    private final UserRepository userRepository;
+
+    private final OrderProps orderProps;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private OrderProps orderProps;
+    public OrderController(OrderRepository orderRepository, UserRepository userRepository, OrderProps orderProps) {
+        this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
+        this.orderProps = orderProps;
+    }
 
     @GetMapping("/current")
     public String orderForm(Model model) {

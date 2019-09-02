@@ -15,8 +15,12 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class IngredientController {
 
+    private final IngredientRepository repository;
+
     @Autowired
-    private IngredientRepository repository;
+    public IngredientController(IngredientRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping
     public List<Ingredient> getAllIngredients() {
