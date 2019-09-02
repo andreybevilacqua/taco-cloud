@@ -31,7 +31,7 @@ public class DesignTacoController {
 
   @PostMapping(consumes = "application/json")
   @ResponseStatus(HttpStatus.CREATED)
-  public Mono<Taco> postTaco(@RequestBody Mono<Taco> tacoMono) {
+  public Mono<Taco> createTaco(@RequestBody Mono<Taco> tacoMono) {
     return tacoRepo.saveAll(tacoMono).next();
   }
 
