@@ -1,6 +1,5 @@
 package com.abevilacqua.tacoreactive.config;
 
-
 import com.abevilacqua.tacoreactive.model.Ingredient;
 import com.abevilacqua.tacoreactive.model.Taco;
 import com.abevilacqua.tacoreactive.repo.IngredientRepository;
@@ -21,7 +20,6 @@ public class DBInitializer {
                 new Ingredient( "Carnitas", PROTEIN),
                 new Ingredient( "Diced Tomatoes", VEGGIES),
                 new Ingredient( "Lettuce", VEGGIES),
-                new Ingredient( "Cheddar", CHEESE),
                 new Ingredient( "Cheddar", CHEESE),
                 new Ingredient( "Monterrey Jack", CHEESE),
                 new Ingredient( "Sour Cream", SAUCE))
