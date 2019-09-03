@@ -1,11 +1,14 @@
 package com.abevilacqua.tacoreactive.controller;
 
+import com.abevilacqua.tacoreactive.client.IngredientClient;
 import com.abevilacqua.tacoreactive.model.Ingredient;
 import com.abevilacqua.tacoreactive.repo.IngredientRepository;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -13,9 +16,17 @@ import reactor.core.publisher.Mono;
 public class IngredientController {
 
   private IngredientRepository ingredientRepository;
+  private IngredientClient ingredientClient;
 
-  public IngredientController(IngredientRepository ingredientRepository) {
+  public IngredientController(IngredientRepository ingredientRepository,
+                              IngredientClient ingredientClient) {
     this.ingredientRepository = ingredientRepository;
+    this.ingredientClient = ingredientClient;
+  }
+
+  @GetMapping()
+  public Flux<Ingredient> getIngredients() {
+    return ingredientRepository.findAll();
   }
 
   @GetMapping("/{id}")
@@ -23,14 +34,13 @@ public class IngredientController {
     return ingredientRepository.findById(id);
   }
 
-  @GetMapping("/APIRequest")
-  public void requestIngredient(long id) {
-    Mono<Ingredient> ingredientMono = WebClient.create()
-        .get()
-        .uri("http://localhost:8080/ingredients/{id}", id)
-        .retrieve()
-        .bodyToMono(Ingredient.class);
+  @GetMapping("/APIRequestGetIngredients")
+  public void requestIngredients() {
+    ingredientClient.requestIngredients();
+  }
 
-    ingredientMono.subscribe(i -> System.out.println(i.getName()));
+  @GetMapping("/APIRequestGetIngredient")
+  public void requestIngredient(@PathVariable("id") long id) {
+    ingredientClient.requestIngredient(id);
   }
 }
