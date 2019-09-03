@@ -7,12 +7,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.reactivestreams.Publisher;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 public class DesignTacoControllerTest {
@@ -57,6 +61,20 @@ public class DesignTacoControllerTest {
         .isEqualTo(tacos[11].getId().toString())
         .jsonPath("$[11].name").isEqualTo("Taco 12").jsonPath("$[12]").doesNotExist()
         .jsonPath("$[12]").doesNotExist();
+  }
+
+  @Test
+  public void shouldSaveTaco() {
+    Mono<Taco> unsavedTaco = Mono.just(createTestTaco(null));
+
+    when(tacoRepository.saveAll(unsavedTaco)).thenReturn(Flux.just(createTestTaco(1L)));
+
+    testClient.post()
+        .uri("/design")
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(unsavedTaco, Taco.class)
+        .exchange()
+        .expectStatus().isCreated();
   }
 
   private Taco createTestTaco(Long number) {

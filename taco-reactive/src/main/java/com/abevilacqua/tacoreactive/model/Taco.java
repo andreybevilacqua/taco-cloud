@@ -25,7 +25,4 @@ public class Taco {
     private Date createdAt;
 
     private Flux<Ingredient> ingredients;
-
-    void createdAt() { this.createdAt = new Date(); }
-
 }
