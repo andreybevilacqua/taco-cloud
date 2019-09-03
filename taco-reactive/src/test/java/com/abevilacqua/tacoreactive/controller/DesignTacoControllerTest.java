@@ -33,19 +33,16 @@ public class DesignTacoControllerTest {
   @Test
   public void shouldReturnRecentTacos() {
     Taco[] tacos = {
-        testTaco(1L), testTaco(2L),
-        testTaco(3L), testTaco(4L),
-        testTaco(5L), testTaco(6L),
-        testTaco(7L), testTaco(8L),
-        testTaco(9L), testTaco(10L),
-        testTaco(11L), testTaco(12L),
-        testTaco(13L), testTaco(14L),
-        testTaco(15L), testTaco(16L)
+        createTestTaco(1L), createTestTaco(2L),
+        createTestTaco(3L), createTestTaco(4L),
+        createTestTaco(5L), createTestTaco(6L),
+        createTestTaco(7L), createTestTaco(8L),
+        createTestTaco(9L), createTestTaco(10L),
+        createTestTaco(11L), createTestTaco(12L),
+        createTestTaco(13L), createTestTaco(14L),
+        createTestTaco(15L), createTestTaco(16L)
     };
-
-    Flux<Taco> tacoFlux = Flux.just(tacos);
-
-    when(tacoRepository.findAll()).thenReturn(tacoFlux);
+    when(tacoRepository.findAll()).thenReturn(Flux.just(tacos));
 
     testClient.get().uri("/design/recent")
         .exchange()
@@ -62,7 +59,7 @@ public class DesignTacoControllerTest {
         .jsonPath("$[12]").doesNotExist();
   }
 
-  private Taco testTaco(Long number) {
+  private Taco createTestTaco(Long number) {
     Taco taco = new Taco();
     taco.setId(number);
     taco.setName("Taco " + number);
