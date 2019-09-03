@@ -1,6 +1,7 @@
 package com.abevilacqua.tacoreactive.client;
 
 import com.abevilacqua.tacoreactive.model.Ingredient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,10 +11,17 @@ import reactor.core.publisher.Mono;
 @Component
 public class IngredientClient {
 
+  private WebClient webClient;
+
+  @Autowired
+  public IngredientClient(WebClient webClient) {
+    this.webClient = webClient;
+  }
+
   public void requestIngredient(@PathVariable("id") long id) {
-    Mono<Ingredient> ingredientMono = WebClient.create()
+    Mono<Ingredient> ingredientMono = webClient
         .get()
-        .uri("http://localhost:8080/ingredients/{id}", id)
+        .uri("/ingredients/{id}", id)
         .retrieve()
         .bodyToMono(Ingredient.class);
 
@@ -21,9 +29,9 @@ public class IngredientClient {
   }
 
   public void requestIngredients() {
-    Flux<Ingredient> ingredients = WebClient.create()
+    Flux<Ingredient> ingredients = webClient
         .get()
-        .uri("http://localhost:8080/ingredients")
+        .uri("/ingredients")
         .retrieve()
         .bodyToFlux(Ingredient.class);
 

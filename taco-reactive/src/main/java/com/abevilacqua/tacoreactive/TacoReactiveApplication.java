@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import static com.abevilacqua.tacoreactive.config.DBInitializer.initialize;
 
@@ -21,6 +22,11 @@ public class TacoReactiveApplication {
 	@Bean
 	public ApplicationRunner init(TacoRepository tacoRepo, IngredientRepository ingrRepo) {
 		return args -> initialize(tacoRepo, ingrRepo);
+	}
+
+	@Bean
+	public WebClient webClient() {
+		return WebClient.create("http://localhost:8080");
 	}
 
 }

@@ -3,11 +3,11 @@ package com.abevilacqua.tacoreactive.controller;
 import com.abevilacqua.tacoreactive.client.IngredientClient;
 import com.abevilacqua.tacoreactive.model.Ingredient;
 import com.abevilacqua.tacoreactive.repo.IngredientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -18,6 +18,7 @@ public class IngredientController {
   private IngredientRepository ingredientRepository;
   private IngredientClient ingredientClient;
 
+  @Autowired
   public IngredientController(IngredientRepository ingredientRepository,
                               IngredientClient ingredientClient) {
     this.ingredientRepository = ingredientRepository;
