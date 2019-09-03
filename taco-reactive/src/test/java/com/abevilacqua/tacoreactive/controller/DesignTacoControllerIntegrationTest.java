@@ -51,8 +51,8 @@ public class DesignTacoControllerIntegrationTest {
     taco.setId(number);
     taco.setName("Taco " + number);
     List<Ingredient> ingredients = new ArrayList<>();
-    ingredients.add(new Ingredient("INGA", Ingredient.Type.WRAP));
-    ingredients.add(new Ingredient("INGB", Ingredient.Type.PROTEIN));
+    ingredients.add(new Ingredient(1L, "INGA", Ingredient.Type.WRAP));
+    ingredients.add(new Ingredient(2L, "INGB", Ingredient.Type.PROTEIN));
 
     taco.setIngredients(Flux.fromIterable(ingredients));
     return taco;

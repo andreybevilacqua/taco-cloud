@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import reactor.core.publisher.Flux;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -19,10 +20,7 @@ public class Taco {
 
     @Id
     private Long id;
-
     private String name;
-
-    private Date createdAt;
-
+    private LocalDate createdAt;
     private Flux<Ingredient> ingredients;
 }

@@ -14,15 +14,15 @@ public class DBInitializer {
     public static void initialize(TacoRepository tacoRepo,
                                                IngredientRepository ingrRepo) {
         Stream.of(
-                new Ingredient( "Flour Tortilla", WRAP),
-                new Ingredient( "Corn Tortilla", WRAP),
-                new Ingredient( "Ground Beef", PROTEIN),
-                new Ingredient( "Carnitas", PROTEIN),
-                new Ingredient( "Diced Tomatoes", VEGGIES),
-                new Ingredient( "Lettuce", VEGGIES),
-                new Ingredient( "Cheddar", CHEESE),
-                new Ingredient( "Monterrey Jack", CHEESE),
-                new Ingredient( "Sour Cream", SAUCE))
+                new Ingredient(1L, "Flour Tortilla", WRAP),
+                new Ingredient(2L,  "Corn Tortilla", WRAP),
+                new Ingredient(3L,  "Ground Beef", PROTEIN),
+                new Ingredient( 4L, "Carnitas", PROTEIN),
+                new Ingredient( 5L, "Diced Tomatoes", VEGGIES),
+                new Ingredient( 6L, "Lettuce", VEGGIES),
+                new Ingredient( 7L, "Cheddar", CHEESE),
+                new Ingredient( 8L, "Monterrey Jack", CHEESE),
+                new Ingredient( 9L, "Sour Cream", SAUCE))
                 .forEach(ingrRepo::save);
 
         Stream.of(

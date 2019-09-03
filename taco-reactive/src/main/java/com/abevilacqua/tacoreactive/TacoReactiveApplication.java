@@ -2,8 +2,6 @@ package com.abevilacqua.tacoreactive;
 
 import com.abevilacqua.tacoreactive.repo.IngredientRepository;
 import com.abevilacqua.tacoreactive.repo.TacoRepository;
-import com.mongodb.reactivestreams.client.MongoClient;
-import com.mongodb.reactivestreams.client.MongoClients;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,8 +19,7 @@ public class TacoReactiveApplication {
 	}
 
 	@Bean
-	public ApplicationRunner init(TacoRepository tacoRepo,
-								  IngredientRepository ingrRepo) {
+	public ApplicationRunner init(TacoRepository tacoRepo, IngredientRepository ingrRepo) {
 		return args -> initialize(tacoRepo, ingrRepo);
 	}
 

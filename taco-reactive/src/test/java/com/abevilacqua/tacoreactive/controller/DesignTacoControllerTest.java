@@ -12,6 +12,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,13 +64,13 @@ public class DesignTacoControllerTest {
 
   @Test
   public void shouldSaveTaco() {
-    Mono<Taco> unsavedTaco = Mono.just(createTestTaco(null));
+    Mono<Taco> unsavedTaco = Mono.just(createTestTaco(1L));
 
     when(tacoRepository.saveAll(unsavedTaco)).thenReturn(Flux.just(createTestTaco(1L)));
 
     testClient.post()
         .uri("/design")
-        .contentType(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
         .body(unsavedTaco, Taco.class)
         .exchange()
         .expectStatus().isCreated();
@@ -79,9 +80,10 @@ public class DesignTacoControllerTest {
     Taco taco = new Taco();
     taco.setId(number);
     taco.setName("Taco " + number);
+    taco.setCreatedAt(LocalDate.now());
     List<Ingredient> ingredients = new ArrayList<>();
-    ingredients.add(new Ingredient("INGA", Ingredient.Type.WRAP));
-    ingredients.add(new Ingredient("INGB", Ingredient.Type.PROTEIN));
+    ingredients.add(new Ingredient(1L, "INGA", Ingredient.Type.WRAP));
+    ingredients.add(new Ingredient(2L, "INGB", Ingredient.Type.PROTEIN));
 
     taco.setIngredients(Flux.fromIterable(ingredients));
     return taco;
