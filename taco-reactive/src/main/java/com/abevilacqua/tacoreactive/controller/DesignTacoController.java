@@ -24,7 +24,7 @@ public class DesignTacoController {
     return tacoRepo.findAll().take(12);
   }
 
-  @GetMapping("${id}")
+  @GetMapping("/{id}")
   public Mono<Taco> tacoById(@PathVariable("id") Long id) {
     return tacoRepo.findById(id);
   }
