@@ -1,7 +1,10 @@
 package com.abevilacqua.tacoreactive.client;
 
+import com.abevilacqua.tacoreactive.exception.ClientErrorException;
+import com.abevilacqua.tacoreactive.exception.UnknownIngredientException;
 import com.abevilacqua.tacoreactive.model.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -25,9 +28,18 @@ public class IngredientClient {
         .get()
         .uri("/ingredients/{id}", id)
         .retrieve()
+        .onStatus(
+            HttpStatus::is4xxClientError, // Or status -> status == HttpStatus.NOT_FOUND
+            response -> Mono.just(new UnknownIngredientException()))
+        .onStatus(
+            HttpStatus::is5xxServerError,
+            response -> Mono.just(new ClientErrorException())
+        )
         .bodyToMono(Ingredient.class);
 
-    ingredientMono.subscribe(i -> System.out.println(i.getName()));
+    ingredientMono.subscribe(
+        i -> System.out.println(i.getName()),
+        e -> System.out.println(e));
   }
 
   public void requestIngredients() {
