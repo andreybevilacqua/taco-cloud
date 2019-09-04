@@ -8,6 +8,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 @Component
 public class IngredientClient {
 
@@ -35,6 +37,30 @@ public class IngredientClient {
         .retrieve()
         .bodyToFlux(Ingredient.class);
 
-    ingredients.subscribe(i -> System.out.println(i.getName()));
+    ingredients
+        .timeout(Duration.ofSeconds(1))
+        .subscribe(
+            i -> System.out.println(i.getName()),
+            e -> System.out.println(e));
+  }
+
+  public void createIngredient(Mono<Ingredient> ingredient) {
+    Mono<Ingredient> result = webClient.post()
+        .uri("/ingredients")
+        .body(ingredient, Ingredient.class)
+        .retrieve()
+        .bodyToMono(Ingredient.class);
+
+    result.subscribe(System.out::println);
+  }
+
+  public void createIngredient(Ingredient ingredient) {
+    Mono<Ingredient> result = webClient.post()
+        .uri("/ingredients")
+        .syncBody(ingredient)// If you have a domain object and not a Mono/Flux.
+        .retrieve()
+        .bodyToMono(Ingredient.class);
+
+    result.subscribe(System.out::println);
   }
 }
