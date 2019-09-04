@@ -56,14 +56,6 @@ public class IngredientClient {
             e -> System.out.println(e));
   }
 
-  public void requestIngredientWithExchange() {
-    Mono<Ingredient> ingredient = webClient
-        .get()
-        .uri("/ingredients")
-        .exchange()
-        .flatMap(cr -> cr.bodyToMono(Ingredient.class));
-  }
-
   public void createIngredient(Mono<Ingredient> ingredient) {
     Mono<Ingredient> result = webClient.post()
         .uri("/ingredients")
@@ -99,5 +91,17 @@ public class IngredientClient {
         .retrieve()
         .bodyToMono(Void.class)
         .subscribe();
+  }
+
+  public void requestIngredientWithExchange() {
+    Mono<Ingredient> ingredient = webClient
+        .get()
+        .uri("/ingredients")
+        .exchange()
+        .flatMap(cr -> {
+          if(cr.headers().header("X_UNAVAILABLE").contains("true")) return Mono.empty();
+          else return Mono.just(cr);
+        })
+        .flatMap(cr -> cr.bodyToMono(Ingredient.class));
   }
 }
