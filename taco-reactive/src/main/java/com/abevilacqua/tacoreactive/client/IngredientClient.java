@@ -72,4 +72,12 @@ public class IngredientClient {
         .bodyToMono(Void.class)
         .subscribe();
   }
+
+  public void deleteIngredient(Long id) {
+    webClient.delete()
+        .uri("/ingredients/{id}", id)
+        .retrieve()
+        .bodyToMono(Void.class)
+        .subscribe();
+  }
 }

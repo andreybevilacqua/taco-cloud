@@ -37,6 +37,13 @@ public class IngredientController {
     return ingredientRepository.saveAll(ingredient).next();
   }
 
+  @PutMapping("/{id}")
+  public Mono<Ingredient> updateIngredient(@PathVariable("id") long id, @RequestBody Mono<Ingredient> ingredientMono) {
+    Mono<Ingredient> tempIngredient = ingredientRepository.findById(id);
+    tempIngredient = ingredientMono;
+    return ingredientRepository.saveAll(tempIngredient).next();
+  }
+
   @GetMapping("/APIRequestGetIngredients")
   public void requestIngredients() {
     ingredientClient.requestIngredients();
