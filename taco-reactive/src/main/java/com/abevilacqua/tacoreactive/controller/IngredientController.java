@@ -44,6 +44,11 @@ public class IngredientController {
     return ingredientRepository.saveAll(tempIngredient).next();
   }
 
+  @DeleteMapping("/{id}")
+  public Mono<Void> deleteIngredient(@PathVariable("id") long id) {
+    return ingredientRepository.deleteById(id);
+  }
+
   @GetMapping("/APIRequestGetIngredients")
   public void requestIngredients() {
     ingredientClient.requestIngredients();
