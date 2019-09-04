@@ -63,4 +63,13 @@ public class IngredientClient {
 
     result.subscribe(System.out::println);
   }
+
+  public void updateIngredient(Ingredient ingredient) {
+    webClient.put()
+        .uri("/ingredients/{id}", ingredient.getId())
+        .syncBody(ingredient)// If you have a domain object and not a Mono/Flux.
+        .retrieve()
+        .bodyToMono(Void.class)
+        .subscribe();
+  }
 }
