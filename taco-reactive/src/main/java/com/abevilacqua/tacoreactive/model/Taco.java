@@ -19,7 +19,7 @@ import java.util.Date;
 public class Taco {
 
     @Id
-    private Long id;
+    private String id;
     private String name;
     private LocalDate createdAt;
     private Flux<Ingredient> ingredients;
