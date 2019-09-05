@@ -15,18 +15,18 @@ import static com.abevilacqua.tacoreactive.config.DBInitializer.initialize;
 @EnableReactiveMongoRepositories
 public class TacoReactiveApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TacoReactiveApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(TacoReactiveApplication.class, args);
+  }
 
-	@Bean
-	public ApplicationRunner init(TacoRepository tacoRepo, IngredientRepository ingrRepo) {
-		return args -> initialize(tacoRepo, ingrRepo);
-	}
+  @Bean
+  public ApplicationRunner init(TacoRepository tacoRepo, IngredientRepository ingrRepo) {
+    return args -> initialize(tacoRepo, ingrRepo);
+  }
 
-	@Bean
-	public WebClient webClient() {
-		return WebClient.create("http://localhost:8080");
-	}
+  @Bean
+  public WebClient webClient() {
+    return WebClient.create("http://localhost:8080");
+  }
 
 }
