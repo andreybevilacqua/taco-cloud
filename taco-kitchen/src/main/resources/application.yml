@@ -9,3 +9,5 @@ spring:
   jms:
     template:
       default-destination: taco.order.queue
+  application:
+    name: Taco-Kitchen-JMS-API

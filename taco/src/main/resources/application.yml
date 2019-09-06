@@ -4,6 +4,8 @@ spring:
       path: /console
   datasource:
     url: jdbc:h2:mem:taco-app
+  application:
+    name: Taco-API
 
 server:
   port: 8443
