@@ -7,8 +7,15 @@ spring:
   application:
     name: Taco-API
 
+# By default, when you add Eureka client as dependency, it will try to find Eureka server in localhost:8761.
+# For production, you need to specify the location of the Eureka server.
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
 server:
-  port: 8443
+  port: 0
   ssl:
     key-store: /Users/andreybevilacqua/Documents/java/workspace/taco-cloud/taco/mykeys.jks
     key-store-password: 123456
