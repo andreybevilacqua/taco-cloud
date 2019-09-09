@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 0
 spring:
   artemis: #ActiveMQ Artemis
     host: tcp://localhost:61616
