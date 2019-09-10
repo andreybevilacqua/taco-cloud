@@ -19,4 +19,11 @@ public class IngredientController {
   public Ingredient getById(@PathVariable("id") final String id) {
     return service.getIngredientById(id);
   }
+
+  @PostMapping
+  public Ingredient createIngredient(@RequestBody Ingredient ingredient) { return service.createIngredient(ingredient); }
+
+  @PutMapping
+  public void updateIngredient(@RequestBody Ingredient ingredient) { service.updateIngredient(ingredient); }
+
 }
