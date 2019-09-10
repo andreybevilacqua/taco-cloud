@@ -26,8 +26,8 @@ public class IngredientService {
     restTemplate.put("http://localhost:8080/ingredients/{id}", ingredient, ingredient.getId());
   }
 
-  public void deleteIngredient(Ingredient ingredient) {
-    restTemplate.delete("http://localhost:8080/ingredients/{id}", ingredient.getId());
+  public void deleteIngredient(String id) {
+    restTemplate.delete("http://localhost:8080/ingredients/{id}", id);
   }
 
 }

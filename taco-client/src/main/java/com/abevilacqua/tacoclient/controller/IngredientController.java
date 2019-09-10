@@ -26,4 +26,7 @@ public class IngredientController {
   @PutMapping
   public void updateIngredient(@RequestBody Ingredient ingredient) { service.updateIngredient(ingredient); }
 
+  @DeleteMapping
+  public void deleteIngredient(@PathVariable("id") final String id) { service.deleteIngredient(id);}
+
 }
