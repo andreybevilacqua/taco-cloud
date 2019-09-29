@@ -15,11 +15,11 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 server:
-  port: 0
-  ssl:
-    key-store: /Users/andreybevilacqua/Documents/java/workspace/taco-cloud/taco/mykeys.jks
-    key-store-password: 123456
-    key-password: 123456
+  port: 8080
+#  ssl:
+#    key-store: /Users/andreybevilacqua/Documents/java/workspace/taco-cloud/taco/mykeys.jks
+#    key-store-password: 123456
+#    key-password: 123456
 
 logging:
   path: /Users/andreybevilacqua/Downloads
