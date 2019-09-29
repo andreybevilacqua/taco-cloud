@@ -5,6 +5,8 @@ import com.abevilacqua.tacoclient.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/ingredients")
 @CrossOrigin(origins = "*")
@@ -14,6 +16,11 @@ public class IngredientController {
 
   @Autowired
   public IngredientController(IngredientService ingredientService) { this.service = ingredientService; }
+
+  @GetMapping
+  public List getIngredienst() {
+    return service.getIngredients();
+  }
 
   @GetMapping("/{id}")
   public Ingredient getById(@PathVariable("id") final String id) {
