@@ -7,3 +7,5 @@ Using:
 	- Spring Security
 	- Spring Reactive
 	- Spring Eureka
+	- Spring Config Server
+	- Java 11
