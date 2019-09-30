@@ -6,13 +6,13 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.8.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.abevilacqua</groupId>
 	<artifactId>taco-config-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>taco-config-server</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Taco Config Server with Spring Config Server</description>
 
 	<properties>
 		<java.version>11</java.version>
