@@ -6,6 +6,9 @@ spring:
     url: jdbc:h2:mem:taco-app
   application:
     name: Taco-API
+  cloud:
+    config:
+      uri: http://localhost:8888
 
 # By default, when you add Eureka client as dependency, it will try to find Eureka server in localhost:8761.
 # For production, you need to specify the location of the Eureka server.
