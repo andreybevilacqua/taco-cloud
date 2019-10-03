@@ -6,8 +6,10 @@ spring:
       server:
         git:
           uri: https://github.com/andreybevilacqua/taco-cloud-config.git
-          skip-ssl-validation: true
           search-paths: config, another_config
+#          username: test
+#          password: test
+          skip-ssl-validation: true
 
 server:
   port: 8888
