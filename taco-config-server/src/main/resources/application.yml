@@ -14,11 +14,11 @@ spring:
 #          username: test
 #          password: test
           skip-ssl-validation: true
-        vault:
-          host: http://127.0.0.1:8200
-          port: 8200
-          scheme: http
-          order: 1
+#        vault:
+#          host: http://127.0.0.1:8200
+#          port: 8200
+#          scheme: http
+#          order: 1
 
 server:
   port: 8888
