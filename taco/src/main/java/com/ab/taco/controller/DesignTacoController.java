@@ -7,6 +7,7 @@ import com.ab.taco.model.Taco;
 import com.ab.taco.repo.TacoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -30,6 +31,9 @@ public class DesignTacoController {
 
     private final TacoRepository tacoRepository;
 
+    @Value("${some.specific.Taco-API.configuration}")
+    private String mySpecificConfiguration;
+
     @Autowired
     public DesignTacoController(TacoRepository tacoRepository) {
         this.tacoRepository = tacoRepository;
@@ -37,6 +41,7 @@ public class DesignTacoController {
 
     @GetMapping("/recent")
     public Resources<TacoResource> recentTaco() {
+        log.info("My specific configuration is: {}", mySpecificConfiguration);
         Pageable page = PageRequest.of(0, 12, Sort.by("createdAt").descending());
         List<Taco> tacos = new ArrayList<>();
         tacoRepository.findAll(page).forEach(tacos::add);
