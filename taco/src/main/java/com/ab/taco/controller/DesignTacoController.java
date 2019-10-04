@@ -2,6 +2,7 @@ package com.ab.taco.controller;
 
 import com.ab.taco.controller.api.TacoResource;
 import com.ab.taco.controller.api.TacoResourceAssembler;
+import com.ab.taco.model.GreetingProps;
 import com.ab.taco.model.Order;
 import com.ab.taco.model.Taco;
 import com.ab.taco.repo.TacoRepository;
@@ -34,14 +35,20 @@ public class DesignTacoController {
     @Value("${some.specific.Taco-API.configuration}")
     private String mySpecificConfiguration;
 
+    private final GreetingProps props;
+
     @Autowired
-    public DesignTacoController(TacoRepository tacoRepository) {
+    public DesignTacoController(TacoRepository tacoRepository, GreetingProps props) {
         this.tacoRepository = tacoRepository;
+        this.props = props;
     }
 
     @GetMapping("/recent")
     public Resources<TacoResource> recentTaco() {
+        // Attribute and object received from Config Server
         log.info("My specific configuration is: {}", mySpecificConfiguration);
+        log.info("This is my property from Config Server: {}", props.getMessage());
+
         Pageable page = PageRequest.of(0, 12, Sort.by("createdAt").descending());
         List<Taco> tacos = new ArrayList<>();
         tacoRepository.findAll(page).forEach(tacos::add);
