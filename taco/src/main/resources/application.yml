@@ -33,3 +33,9 @@ taco:
     pageSize: 10
   integration:
     folder: /Users/andreybevilacqua/Downloads
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
