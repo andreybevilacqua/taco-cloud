@@ -2,6 +2,8 @@ package com.ab.taco.service.Impl;
 
 import com.ab.taco.model.Ingredient;
 import com.ab.taco.service.IngredientService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.MediaTypes;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Service
@@ -27,6 +30,28 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    @HystrixCommand(fallbackMethod = "getDefaultIngredients",
+        commandProperties = {
+            @HystrixProperty( // Timeout to call the fallback method if this takes more than half second.
+                name = "execution.isolation.thread.timeoutInMilliseconds",
+                value = "500"
+            ),
+            @HystrixProperty( // Method must be invoked more than 30 times
+                name = "circuitBreaker.requestVolumeThreshold",
+                value = "30"
+            ),
+            @HystrixProperty( // Fail more than 25% of the time
+                name = "circuitBreaker.errorThresholdPercentage",
+                value = "25"
+            ),
+            @HystrixProperty( // Within 20 seconds.
+                name = "metrics.rollingStats.timeInMilliseconds",
+                value = "20000"
+            ),
+            @HystrixProperty( // Must remain open for 1 minute before becoming half open.
+                name = "circuitBreaker.sleepWindowInMilliseconds",
+                value = "60000"
+            )})
     public Collection<Ingredient> getIngredientsWithTraverson(String id) {
         ParameterizedTypeReference<Resources<Ingredient>> ingredientType = new ParameterizedTypeReference<Resources<Ingredient>>() {};
         Resources<Ingredient> ingredientRes = traverson.follow("ingredients").toObject(ingredientType);
@@ -35,6 +60,25 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    @HystrixCommand(fallbackMethod = "getDefaultIngredient",
+    commandProperties = {
+        @HystrixProperty( // Method must be invoked more than 30 times
+            name = "circuitBreaker.requestVolumeThreshold",
+            value = "30"
+        ),
+        @HystrixProperty( // Fail more than 15% of the time
+            name = "circuitBreaker.errorThresholdPercentage",
+            value = "15"
+        ),
+        @HystrixProperty( // Within 20 seconds.
+            name = "metrics.rollingStats.timeInMilliseconds",
+            value = "20000"
+        ),
+        @HystrixProperty( // Must remain open for 1 minute before becoming half open.
+            name = "circuitBreaker.sleepWindowInMilliseconds",
+            value = "60000"
+        ),
+    })
     public Ingredient getIngredientById(String id) {
         return restTemplate.getForObject("http://localhost:8080/ingredients/{id}", Ingredient.class, id);
     }
@@ -82,5 +126,16 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public void deleteIngredient(Ingredient ingredient) {
         restTemplate.delete("http://localhost:8080/ingredients/{id}", ingredient.getId());
+    }
+
+    private Iterable<Ingredient> getDefaultIngredients() {
+        return Arrays.asList(
+            new Ingredient("Flour Tortilla", Ingredient.Type.WRAP),
+            new Ingredient("Ground Beef", Ingredient.Type.PROTEIN),
+            new Ingredient("Shredded Cheddar", Ingredient.Type.CHEESE));
+    }
+
+    private Ingredient getDefaultIngredient() {
+        return new Ingredient("Flour Tortilla", Ingredient.Type.WRAP);
     }
 }

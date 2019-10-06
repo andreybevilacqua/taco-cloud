@@ -53,6 +53,12 @@
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 
+		<!--Hystrix-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+		</dependency>
+
 		<!--Lombok-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -89,7 +95,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!--Eureka-->
+			<!--Spring Cloud dependency management-->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
