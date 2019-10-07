@@ -34,6 +34,9 @@ taco:
   integration:
     folder: /Users/andreybevilacqua/Downloads
 
+# Some request examples in Actuator:
+# http://localhost:8080/actuator/loggers,
+# /actuator/mappings, /actuator/beans, /actuator/env, /actuator/conditions, /actuator/health
 management:
   endpoints:
     health:
