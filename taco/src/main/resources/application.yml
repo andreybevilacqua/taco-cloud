@@ -38,4 +38,9 @@ management:
   endpoints:
     web:
       exposure:
-        include: hystrix.stream
+        include: "*"
+
+info:
+  contact:
+    email: my-email@email.com
+    phone: 123-456-7890
