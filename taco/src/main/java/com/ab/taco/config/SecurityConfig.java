@@ -73,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT).permitAll()
                 .antMatchers(HttpMethod.DELETE).permitAll()
                 .antMatchers("/design", "/orders", "/ingredients").permitAll()
+                .antMatchers("/actuator/**").permitAll()
                 .and()
                 .formLogin().loginPage("/login")
                 .usernameParameter("username")
