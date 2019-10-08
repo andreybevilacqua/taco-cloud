@@ -37,6 +37,7 @@ taco:
 # Some request examples in Actuator:
 # http://localhost:8080/actuator/loggers,
 # /actuator/mappings, /actuator/beans, /actuator/env, /actuator/conditions, /actuator/health
+# /actuator/metrics/http.server.requests?tag=status:404
 management:
   endpoints:
     health:
